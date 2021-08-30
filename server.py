@@ -38,7 +38,13 @@ class MyServer(BaseHTTPRequestHandler):
 
         if controller == "pergola":
             if command in codes:
-                rfdevice.tx_code(codes[command], protocol, pulse_length)
+                try:
+                    rfdevice.tx_code(codes[command], protocol, pulse_length)
+                except:
+                    rfdevice.cleanup()
+                    rfdevice = RFDevice(gpio)
+                    rfdevice.enable_tx()
+                    rfdevice.tx_code(codes[command], protocol, pulse_length)
 
         self.send_response(200)
         self.send_header("Content-type", "application/json")
