@@ -42,7 +42,6 @@ class MyServer(BaseHTTPRequestHandler):
                     rfdevice.tx_code(codes[command], protocol, pulse_length)
                 except:
                     rfdevice.cleanup()
-                    rfdevice = RFDevice(gpio)
                     rfdevice.enable_tx()
                     rfdevice.tx_code(codes[command], protocol, pulse_length)
 
